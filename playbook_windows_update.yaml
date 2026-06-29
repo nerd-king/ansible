@@ -1,4 +1,4 @@
-- name: Apply windows updates
+- name: Apply Windows Updates
   hosts: win_all
   gather_facts: yes
   vars:
@@ -7,13 +7,8 @@
           (( ((ansible_date_time.date+" "+ansible_date_time.time)|to_datetime('%Y-%m-%d %H:%M:%S')) -
               ansible_facts.lastboot|to_datetime('%Y-%m-%d %H:%M:%SZ')).total_seconds())|abs }}
   tasks:
-  # Reboot systems with if up longer then day
-  # this way we know that the system was able to come back
-  # up before updates were applied
   - block:
-    - name: >
-        {{ 'Install' if 'install' in ansible_run_tags else 'Search' }} updates
-        {{ 'will automatically reboot' if 'reboot' in ansible_run_tags else 'no reboot' }}
+    - name: Install Updates And Reboot
       win_updates:
         category_names:
           - SecurityUpdates
