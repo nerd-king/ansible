@@ -1,0 +1,31 @@
+---
+- name: System maintenance and patching
+  hosts: linux
+  become: true
+  tasks:
+    - name: Update package cache and upgrade all packages (Ubuntu/Debian)
+      ansible.builtin.apt:
+        upgrade: dist
+        update_cache: true
+      when: ansible_os_family == "Debian"
+
+    - name: Upgrade all packages (RHEL/CentOS/Rocky)
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+    - name: Check if a reboot is required (Ubuntu/Debian)
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+      when: ansible_os_family == "Debian"
+
+    - name: Reboot the server if required
+      ansible.builtin.reboot:
+        msg: "Reboot initiated by Ansible due to system updates"
+        connect_timeout: 5
+        reboot_timeout: 300
+      when: 
+        - ansible_os_family == "Debian"
+        - reboot_required_file.stat.exists
