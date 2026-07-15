@@ -1,0 +1,3 @@
+collections:
+  # Installs the latest version from Ansible Galaxy
+  - name: ansible.windows
