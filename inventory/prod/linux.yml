@@ -5,3 +5,5 @@ all:
         web01.internal.codetical.com:
         ansible.internal.codetical.com:
         pelican.internal.codetical.com:
+        pinas.internal.codetical.com:
+        pirateship.internal.codetical.com:
