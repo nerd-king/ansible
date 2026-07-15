@@ -8,18 +8,21 @@
         upgrade: dist
         update_cache: true
       when: ansible_os_family == "Debian"
+      become: true
 
     - name: Upgrade all packages (RHEL/CentOS/Rocky)
       ansible.builtin.dnf:
         name: "*"
         state: latest
       when: ansible_os_family == "RedHat"
+      become: true
 
     - name: Check if a reboot is required (Ubuntu/Debian)
       ansible.builtin.stat:
         path: /var/run/reboot-required
       register: reboot_required_file
       when: ansible_os_family == "Debian"
+      become: true
 
     - name: Reboot the server if required
       ansible.builtin.reboot:
@@ -29,3 +32,4 @@
       when: 
         - ansible_os_family == "Debian"
         - reboot_required_file.stat.exists
+      become: true
