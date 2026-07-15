@@ -26,8 +26,3 @@ all:
       children:
         domain_controllers:
         windows:
-    ubuntu:
-      hosts:
-        web01.internal.codetical.com
-        ansible.internal.codetical.com
-        pelican.internal.codetical.com

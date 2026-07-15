@@ -1,0 +1,7 @@
+all:
+  children:
+    ubuntu:
+      hosts:
+        web01.internal.codetical.com
+        ansible.internal.codetical.com
+        pelican.internal.codetical.com
