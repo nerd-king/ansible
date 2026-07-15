@@ -1,6 +1,6 @@
 ---
 - name: System maintenance and patching
-  hosts: linux
+  hosts: ubuntu
   become: true
   tasks:
     - name: Update package cache and upgrade all packages (Ubuntu/Debian)
