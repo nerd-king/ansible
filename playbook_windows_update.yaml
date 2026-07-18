@@ -28,4 +28,4 @@
         reboot_timeout: 3600
         post_reboot_delay: 120
         test_command: 'powershell.exe -Command "Get-Service WinRM"'
-      when: update_result.reboot_required
+      when: update_results.reboot_required
