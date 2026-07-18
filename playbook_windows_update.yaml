@@ -9,16 +9,23 @@
   tasks:
   - block:
     - name: Install Updates And Reboot
-      win_updates:
+      ansible.windows.win_updates:
         category_names:
           - SecurityUpdates
           - CriticalUpdates
           - UpdateRollups
           - DefinitionUpdates
           - Updates
-        reboot: yes
+        reboot: false
         state: installed
       become: yes
       become_method: runas
       become_user: SYSTEM
       register: update_results
+
+    - name: Reboot explicitly if required
+      ansible.windows.win_reboot:
+        reboot_timeout: 3600
+        post_reboot_delay: 120
+        test_command: 'powershell.exe -Command "Get-Service WinRM"'
+      when: update_result.reboot_required
